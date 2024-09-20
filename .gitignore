@@ -1,0 +1,10 @@
+*~
+*.pyc
+build/*
+dist/*
+colortimelog.egg-info/*
+.coverage
+.DS_Store
+.pytype
+coverage.xml
+.venv
