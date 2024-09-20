@@ -7,7 +7,7 @@ class TestTimeLog(unittest.TestCase):
 
   def test_timeblock(self):
     """Test the timeblock context manager."""
-    with colortimelog.timeblock("test"):
+    with colortimelog.timeblock("test block"):
       pass
 
   def test_timefunc(self):
@@ -18,6 +18,21 @@ class TestTimeLog(unittest.TestCase):
 
     result = my_function()
     self.assertEqual(result, "done")
+
+
+class TestLogger(unittest.TestCase):
+  """Tests for the Logger class."""
+
+  def test_info(self):
+    """Test the info method."""
+    logger = colortimelog.Logger(verbosity=3)
+    logger.info("test info")
+
+  def test_fatal(self):
+    """Test the fatal method."""
+    logger = colortimelog.Logger(verbosity=0)
+    with self.assertRaises(RuntimeError):
+      logger.fatal("test fatal")
 
 
 if __name__ == "__main__":

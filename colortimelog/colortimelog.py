@@ -1,6 +1,7 @@
 """A util for logging the time elapsed for a task."""
 
 import contextlib
+import dataclasses
 import functools
 import time
 
@@ -29,6 +30,7 @@ class TimeLog:
     print(BColors.OKGREEN, "[Start]", BColors.ENDC, self.message)
 
   def close(self):
+    """Close the time log."""
     time_elapsed = time.time() - self.start_time
     if time_elapsed < 1e-6:
       time_str = "{:.3f}".format(time_elapsed * 1e9) + " nanoseconds"
@@ -56,7 +58,7 @@ class TimeLog:
 
 
 @contextlib.contextmanager
-def timeblock(name):
+def timeblock(name: str):
   """A context manager for timing a block of code."""
   tl = TimeLog(name)
   try:
@@ -74,3 +76,60 @@ def timefunc(func):
       return func(*args, **kwargs)
 
   return wrapper
+
+
+@dataclasses.dataclass
+class Logger:
+  """A logger class with verbosity control."""
+
+  verbosity: int = 3
+
+  def verbosity_prefix(self, level: int) -> str:
+    """Create a prefix for a message based on its verbosity level."""
+    match level:
+      case 0:
+        return BColors.FAIL + "[FATAL]" + BColors.ENDC
+      case 1:
+        return BColors.OKBLUE + "[ERROR]" + BColors.ENDC
+      case 2:
+        return BColors.WARNING + "[WARNING]" + BColors.ENDC
+      case 3:
+        return BColors.BOLD + "[INFO]" + BColors.ENDC
+      case _:
+        return BColors.OKCYAN + "[DEBUG]" + BColors.ENDC
+
+  def print(self, level: int, message: str) -> None:
+    """Print a message if level is not higher than verbosity.
+
+    Args:
+      level: the level of this message, smaller value means more important
+      message: the message to be printed
+
+    Raises:
+      RuntimeError: if level is 0
+    """
+    if level <= self.verbosity:
+      if level == 0:
+        raise RuntimeError(self.verbosity_prefix(level) + " " + message)
+      else:
+        print(self.verbosity_prefix(level), message)
+
+  def fatal(self, message: str) -> None:
+    """Print a fatal message."""
+    self.print(0, message)
+
+  def error(self, message: str) -> None:
+    """Print an error message."""
+    self.print(1, message)
+
+  def warning(self, message: str) -> None:
+    """Print a warning message."""
+    self.print(2, message)
+
+  def info(self, message: str) -> None:
+    """Print an info message."""
+    self.print(3, message)
+
+  def debug(self, message: str) -> None:
+    """Print a debug message."""
+    self.print(4, message)
