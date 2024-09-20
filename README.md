@@ -1,5 +1,9 @@
 # colortimelog: A util for logging the time elapsed for a task.
 
+[![PyPI Version](https://img.shields.io/pypi/v/colortimelog.svg)](https://pypi.python.org/pypi/colortimelog)
+[![Python Versions](https://img.shields.io/pypi/pyversions/colortimelog.svg)](https://pypi.org/project/colortimelog)
+[![Downloads](https://static.pepy.tech/badge/colortimelog)](https://www.pepy.tech/projects/colortimelog)
+
 ## Install
 
 ```
