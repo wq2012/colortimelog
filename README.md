@@ -1,4 +1,4 @@
-# colortimelog: A util for logging the time elapsed for a task.
+# colortimelog: A util for logging the time elapsed for a task
 
 [![Python package](https://github.com/wq2012/colortimelog/actions/workflows/python-package.yml/badge.svg)](https://github.com/wq2012/colortimelog/actions/workflows/python-package.yml)
 [![PyPI Version](https://img.shields.io/pypi/v/colortimelog.svg)](https://pypi.python.org/pypi/colortimelog)
