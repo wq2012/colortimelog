@@ -30,6 +30,19 @@ class TimeLog:
 
   def close(self):
     time_elapsed = time.time() - self.start_time
+    if time_elapsed < 1e-6:
+      time_str = "{:.3f}".format(time_elapsed * 1e9) + " nanoseconds"
+    elif time_elapsed < 1e-3:
+      time_str = "{:.3f}".format(time_elapsed * 1e6) + " microseconds"
+    elif time_elapsed < 1:
+      time_str = "{:.3f}".format(time_elapsed * 1e3) + " milliseconds"
+    elif time_elapsed > 3600:
+      time_str = "{:.3f}".format(time_elapsed / 3600) + " hours"
+    elif time_elapsed > 60:
+      time_str = "{:.3f}".format(time_elapsed / 60) + " minutes"
+    else:
+      time_str = "{:.3f}".format(time_elapsed) + " seconds"
+
     print(
         BColors.OKGREEN,
         "[ End ]",
@@ -37,8 +50,7 @@ class TimeLog:
         self.message,
         BColors.OKBLUE,
         "| Took",
-        time_elapsed,
-        "seconds",
+        time_str,
         BColors.ENDC,
     )
 
