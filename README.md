@@ -33,3 +33,14 @@ with colortimelog.timeblock("Doing XYC"):
   do_y()
   do_z()
 ```
+
+Logging with verbosity control:
+
+```python
+import colortimelog
+
+logger = colortimelog.Logger(verbosity=3)
+logger.error("This is an error")
+logger.info("This is info")
+logger.fatal("This will fail")
+```
