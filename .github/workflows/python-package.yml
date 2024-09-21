@@ -32,6 +32,10 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 --indent-size 2 --max-line-length 80 colortimelog
+    - name: pytype
+      run: |
+        pip install pytype
+        pytype .
     - name: Run tests
       run: |
         bash run_tests.sh
