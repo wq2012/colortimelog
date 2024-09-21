@@ -19,6 +19,13 @@ class TestTimeLog(unittest.TestCase):
     result = my_function()
     self.assertEqual(result, "done")
 
+  def test_auto_close(self):
+    """Test the __del__ method."""
+    def my_function() -> None:
+      _ = colortimelog.TimeLog("test auto close")
+      return
+    my_function()
+
 
 class TestLogger(unittest.TestCase):
   """Tests for the Logger class."""

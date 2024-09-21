@@ -25,6 +25,7 @@ class TimeLog:
 
   def __init__(self, message: str):
     self.start_time = time.time()
+    self.closed = False
     self.message = message
 
     print(BColors.OKGREEN, "[Start]", BColors.ENDC, self.message)
@@ -55,6 +56,11 @@ class TimeLog:
         time_str,
         BColors.ENDC,
     )
+    self.closed = True
+
+  def __del__(self):
+    if not self.closed:
+      self.close()
 
 
 @contextlib.contextmanager
@@ -86,16 +92,17 @@ class Logger:
 
   def verbosity_prefix(self, level: int) -> str:
     """Create a prefix for a message based on its verbosity level."""
-    if level == 0:
-      return BColors.FAIL + "[FATAL]" + BColors.ENDC
-    elif level == 1:
+    match level:
+      case 0:
+        return BColors.FAIL + "[FATAL]" + BColors.ENDC
+      case 1:
         return BColors.OKBLUE + "[ERROR]" + BColors.ENDC
-    elif level == 2:
-      return BColors.WARNING + "[WARNING]" + BColors.ENDC
-    elif level == 3:
-      return BColors.BOLD + "[INFO]" + BColors.ENDC
-    else:
-      return BColors.OKCYAN + "[DEBUG]" + BColors.ENDC
+      case 2:
+        return BColors.WARNING + "[WARNING]" + BColors.ENDC
+      case 3:
+        return BColors.BOLD + "[INFO]" + BColors.ENDC
+      case _:
+        return BColors.OKCYAN + "[DEBUG]" + BColors.ENDC
 
   def print(self, level: int, message: str) -> None:
     """Print a message if level is not higher than verbosity.
