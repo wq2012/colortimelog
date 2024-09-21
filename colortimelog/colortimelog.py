@@ -96,9 +96,9 @@ class Logger:
       return BColors.FAIL + "[FATAL]" + BColors.ENDC
     elif level == 1:
       return BColors.OKBLUE + "[ERROR]" + BColors.ENDC
-    elif level ==  2:
+    elif level == 2:
       return BColors.WARNING + "[WARNING]" + BColors.ENDC
-    elif level ==  3:
+    elif level == 3:
       return BColors.BOLD + "[INFO]" + BColors.ENDC
     else:
       return BColors.OKCYAN + "[DEBUG]" + BColors.ENDC
